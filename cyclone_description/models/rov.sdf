@@ -1,0 +1,257 @@
+<?xml version="1.0"?>
+<sdf version="1.10">
+    <model name="rov">
+        <link name="base_link">
+            <inertial>
+                <pose> 0 0 0 0 0 0 </pose>
+                <mass>10</mass>
+                <inertia>
+                    <ixx>0.09873097998042396</ixx>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyy>0.17756847998042397</iyy>
+                    <iyz>0</iyz>
+                    <izz>0.2692441666666667</izz>
+                </inertia>
+            </inertial>
+
+            <visual name="base_link_visual">
+                <geometry>
+                    <mesh>
+                        <uri>model://meshes/rov_model.dae</uri>
+                        <scale></scale>
+                    </mesh>
+                    <!-- <box>
+                        <size>0.2 0.2 0.2</size>
+                    </box> -->
+                </geometry>
+            </visual>
+
+            <!-- displaced mass used by BuoyancyPlugin-->
+            <collision name="base_link_collision">
+                <pose>0 0 0.06 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>0.457 0.338 0.065</size>
+                    </box>
+                </geometry>
+            </collision>
+
+        </link>
+
+        <plugin
+            filename="gz-sim-hydrodynamics-system"
+            name="gz::sim::systems::Hydrodynamics">
+            <link_name>base_link</link_name>
+            <water_density>1000</water_density>
+
+            <!-- TODO: Update these to match our actual ROV. Currently using constants from
+            Orca4/BlueRov2 -->
+            <!-- Added Mass. Used for Fossen's equations -->
+            <xDotU>0</xDotU>
+            <yDotU>0</yDotU>
+            <zDotU>0</zDotU>
+            <kDotU>0</kDotU>
+            <mDotU>0</mDotU>
+            <nDotU>0</nDotU>
+
+            <!-- First Order Stability Derivative. Used for Fossen's-->
+            <xU>0</xU>
+            <yV>0</yV>
+            <zW>0</zW>
+            <kP>0</kP>
+            <mQ>0</mQ>
+            <nR>0</nR>
+
+            <!-- Second Order Stability Derivative. Fossen's Equations -->
+            <xUabsU>-33.800000000000004</xUabsU>
+            <yVabsV>-54.26875</yVabsV>
+            <zWabsW>-73.37135</zWabsW>
+            <kPabsP>-4.0</kPabsP>
+            <mQabsQ>-4.0</mQabsQ>
+            <nRabsR>-4.0</nRabsR>
+
+        </plugin>
+
+        <link name="thruster1">
+            <pose>0.2032 0.25387 0 0 3.14159265359 0</pose>
+            <visual name="thruster_prop_visual">
+                <pose>0 0 0 -1.570796 0 0</pose>
+                <geometry>
+                    <mesh>
+                        <uri>model://meshes/t200-cw-prop.dae</uri>
+                    </mesh>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass>0.002</mass>
+                <inertia>
+                    <ixx>0.001</ixx>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyy>0.001</iyy>
+                    <iyz>0</iyz>
+                    <izz>0.001</izz>
+                </inertia>
+            </inertial>
+        </link>
+
+        <link name="thruster2">
+            <pose>-0.2032 0.25387 0 0 3.14159265359 0</pose>
+            <visual name="thruster_prop_visual">
+                <pose>0 0 0 1.570796 0 0</pose>
+                <geometry>
+                    <mesh>
+                        <uri>model://meshes/t200-cw-prop.dae</uri>
+                    </mesh>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass>0.002</mass>
+                <inertia>
+                    <ixx>0.001</ixx>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyy>0.001</iyy>
+                    <iyz>0</iyz>
+                    <izz>0.001</izz>
+                </inertia>
+            </inertial>
+        </link>
+
+        <link name="thruster3">
+            <pose>0.2032 -0.25387 0 0 3.14159265359 0</pose>
+            <visual name="thruster_prop_visual">
+                <pose>0 0 0 1.570796 0 0</pose>
+                <geometry>
+                    <mesh>
+                        <uri>model://meshes/t200-cw-prop.dae</uri>
+                    </mesh>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass>0.002</mass>
+                <inertia>
+                    <ixx>0.001</ixx>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyy>0.001</iyy>
+                    <iyz>0</iyz>
+                    <izz>0.001</izz>
+                </inertia>
+            </inertial>
+        </link>
+
+        <link name="thruster4">
+            <pose>-0.2032 -0.25387 0 0 3.14159265359 0</pose>
+            <visual name="thruster_prop_visual">
+                <pose>0 0 0 1.570796 0 0</pose>
+                <geometry>
+                    <mesh>
+                        <uri>model://meshes/t200-cw-prop.dae</uri>
+                    </mesh>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass>0.002</mass>
+                <inertia>
+                    <ixx>0.001</ixx>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyy>0.001</iyy>
+                    <iyz>0</iyz>
+                    <izz>0.001</izz>
+                </inertia>
+            </inertial>
+        </link>
+
+        <joint name="thruster1_joint" type="revolute">
+            <parent>base_link</parent>
+            <child>thruster1</child>
+            <axis>
+                <xyz>0 0 -1</xyz>
+            </axis>
+        </joint>
+
+        <plugin
+            filename="gz-sim-thruster-system"
+            name="gz::sim::systems::Thruster">
+            <namespace>rov</namespace>
+            <joint_name>thruster1_joint</joint_name>
+            <thrust_coefficient>0.02</thrust_coefficient>
+            <fluid_density>1000</fluid_density>
+            <propeller_diameter>0.1</propeller_diameter>
+            <velocity_control>true</velocity_control>
+            <use_angvel_cmd>False</use_angvel_cmd>
+        </plugin>
+
+
+
+        <joint name="thruster2_joint" type="revolute">
+            <parent>base_link</parent>
+            <child>thruster2</child>
+            <axis>
+                <xyz>0 0 -1</xyz>
+            </axis>
+        </joint>
+
+        <plugin
+            filename="gz-sim-thruster-system"
+            name="gz::sim::systems::Thruster">
+            <namespace>rov</namespace>
+            <joint_name>thruster2_joint</joint_name>
+            <thrust_coefficient>0.02</thrust_coefficient>
+            <fluid_density>1000</fluid_density>
+            <propeller_diameter>0.1</propeller_diameter>
+            <velocity_control>true</velocity_control>
+            <use_angvel_cmd>False</use_angvel_cmd>
+        </plugin>
+
+
+
+        <joint name="thruster3_joint" type="revolute">
+            <parent>base_link</parent>
+            <child>thruster3</child>
+            <axis>
+                <xyz>0 0 -1</xyz>
+            </axis>
+        </joint>
+
+        <plugin
+            filename="gz-sim-thruster-system"
+            name="gz::sim::systems::Thruster">
+            <namespace>rov</namespace>
+            <joint_name>thruster3_joint</joint_name>
+            <thrust_coefficient>0.02</thrust_coefficient>
+            <fluid_density>1000</fluid_density>
+            <propeller_diameter>0.1</propeller_diameter>
+            <velocity_control>true</velocity_control>
+            <use_angvel_cmd>False</use_angvel_cmd>
+        </plugin>
+
+
+        <joint name="thruster4_joint" type="revolute">
+            <parent>base_link</parent>
+            <child>thruster4</child>
+            <axis>
+                <xyz>0 0 -1</xyz>
+            </axis>
+        </joint>
+
+        <plugin
+            filename="gz-sim-thruster-system"
+            name="gz::sim::systems::Thruster">
+            <namespace>rov</namespace>
+            <joint_name>thruster4_joint</joint_name>
+            <thrust_coefficient>0.02</thrust_coefficient>
+            <fluid_density>1000</fluid_density>
+            <propeller_diameter>0.1</propeller_diameter>
+            <velocity_control>true</velocity_control>
+            <use_angvel_cmd>False</use_angvel_cmd>
+        </plugin>
+
+
+
+    </model>
+
+</sdf>

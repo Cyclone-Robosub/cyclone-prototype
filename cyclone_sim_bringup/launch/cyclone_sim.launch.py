@@ -36,7 +36,7 @@ def generate_launch_description():
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
     # Load the SDF file from "description" package
-    sdf_file  =  os.path.join(pkg_cyclone_description, 'models', 'cyclone_sim', 'model.sdf')
+    sdf_file  =  os.path.join(pkg_cyclone_description, 'models', 'cyclone_sim', 'rov_proc.sdf')
     with open(sdf_file, 'r') as infp:
         robot_desc = infp.read()
 
@@ -45,7 +45,7 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
         launch_arguments={'gz_args': PathJoinSubstitution([
-            pkg_cyclone_description,
+            pkg_cyclone_sim_bringup,
             'worlds',
             'water_world.sdf'
         ])}.items(),

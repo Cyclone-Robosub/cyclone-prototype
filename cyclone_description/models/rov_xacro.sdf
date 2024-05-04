@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+    <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+        <xacro:include filename="t200_thruster.xacro" />
+        <model name="rov">
+            <link name="base_link">
+                <inertial>
+                    <pose> 0 0 0 0 0 0 </pose>
+                    <mass>10</mass>
+                    <inertia>
+                        <ixx>0.09873097998042396</ixx>
+                        <ixy>0</ixy>
+                        <ixz>0</ixz>
+                        <iyy>0.17756847998042397</iyy>
+                        <iyz>0</iyz>
+                        <izz>0.2692441666666667</izz>
+                    </inertia>
+                </inertial>
+
+                <visual name="base_link_visual">
+                    <geometry>
+                        <mesh>
+                            <uri>model://meshes/rov_model.dae</uri>
+                            <scale></scale>
+                        </mesh>
+                        <!-- <box>
+                        <size>0.2 0.2 0.2</size>
+                    </box> -->
+                    </geometry>
+                </visual>
+
+                <!-- displaced mass used by BuoyancyPlugin-->
+                <collision name="base_link_collision">
+                    <pose>0 0 0.06 0 0 0</pose>
+                    <geometry>
+                        <box>
+                            <size>0.457 0.338 0.065</size>
+                        </box>
+                    </geometry>
+                </collision>
+
+            </link>
+
+            <plugin
+                filename="gz-sim-hydrodynamics-system"
+                name="gz::sim::systems::Hydrodynamics">
+                <link_name>base_link</link_name>
+                <water_density>1000</water_density>
+
+                <!-- TODO: Update these to match our actual ROV. Currently using constants from
+                Orca4/BlueRov2 -->
+                <!-- Added Mass. Used for Fossen's equations -->
+                <xDotU>0</xDotU>
+                <yDotU>0</yDotU>
+                <zDotU>0</zDotU>
+                <kDotU>0</kDotU>
+                <mDotU>0</mDotU>
+                <nDotU>0</nDotU>
+
+                <!-- First Order Stability Derivative. Used for Fossen's-->
+                <xU>0</xU>
+                <yV>0</yV>
+                <zW>0</zW>
+                <kP>0</kP>
+                <mQ>0</mQ>
+                <nR>0</nR>
+
+                <!-- Second Order Stability Derivative. Fossen's Equations -->
+                <xUabsU>-33.800000000000004</xUabsU>
+                <yVabsV>-54.26875</yVabsV>
+                <zWabsW>-73.37135</zWabsW>
+                <kPabsP>-4.0</kPabsP>
+                <mQabsQ>-4.0</mQabsQ>
+                <nRabsR>-4.0</nRabsR>
+
+            </plugin>
+
+            <!-- Vertial Thrusters -->
+            <!-- <xacro:t200_thruster name="thruster1" pose="0.2032 0.25387 0 0 3.14159265359 0"
+            prop_type="cw"/> -->
+            <xacro:t200_thruster name="thruster1" pose="0.2032 0.25387 0 0 ${pi} 0" prop_type="cw" />
+
+            <xacro:t200_thruster name="thruster2" pose="-0.2032 0.25387 0 0 ${pi} 0" prop_type="ccw" />
+
+            <xacro:t200_thruster name="thruster3" pose="0.2032 -0.25387 0 0 ${pi} 0" prop_type="ccw" />
+
+            <xacro:t200_thruster name="thruster4" pose="-0.2032 -0.25387 0 0 ${pi} 0" prop_type="cw" />
+
+            <!-- Horizontal/Diagonal Thrusters -->
+            <xacro:t200_thruster name="thruster5"
+                pose="0.152482888 0.152482888 -0.049000000 ${pi/2} 0 ${pi/4}" prop_type="cw" />
+
+            <xacro:t200_thruster name="thruster6" pose="-0.152482888 0.152482888 -0.049000000 0 0 0"
+                prop_type="cw" />
+
+            <xacro:t200_thruster name="thruster7" pose="0.152482888 -0.152482888 -0.049000000 0 0 0"
+                prop_type="cw" />
+
+            <xacro:t200_thruster name="thruster8"
+                pose="-0.152482888 -0.152482888 -0.049000000 0 0 0" prop_type="cw" />
+
+
+            <!-- <xacro:include filename="cam2.xacro"/>
+            <xacro:include filename="camera.xacro" />
+            <xacro:lowlight_cam name="front_cam" parent="base_link" xyz="1 1 1" rpy="0 0 0" /> -->
+            <model name="front_cam">
+                <pose>0 0.214757 0.09108 0 0.0 ${pi/2}</pose>
+                <link name="link">
+                    <pose>0 0 0 0 0 0</pose>
+                    <!-- <inertial>
+                            <mass>0.1</mass>
+                            <inertia>
+                                <ixx>0.000166667</ixx>
+                                <iyy>0.000166667</iyy>
+                                <izz>0.000166667</izz>
+                            </inertia>
+                        </inertial> -->
+                    <collision name="collision">
+                        <geometry>
+                            <box>
+                                <size>0.1 0.1 0.1</size>
+                            </box>
+                        </geometry>
+                    </collision>
+                    <visual name="visual">
+                        <geometry>
+                            <box>
+                                <size>0.1 0.1 0.1</size>
+                            </box>
+                        </geometry>
+                    </visual>
+                    <sensor name="camera" type="camera">
+                        <camera>
+                            <horizontal_fov>1.047</horizontal_fov>
+                            <image>
+                                <width>320</width>
+                                <height>240</height>
+                            </image>
+                            <clip>
+                                <near>0.1</near>
+                                <far>100</far>
+                            </clip>
+                        </camera>
+                        <always_on>true</always_on>
+                        <!-- <update_rate>0</update_rate> -->
+                        <visualize>false</visualize>
+                        <topic>our_camera</topic>
+                    </sensor>
+                </link>
+            </model>
+            <joint name="base_to_cam_joint" type="fixed">
+                <parent>base_link</parent>
+                <child>front_cam::link</child>
+            </joint>
+        </model>
+
+
+    </robot>
+</sdf>
