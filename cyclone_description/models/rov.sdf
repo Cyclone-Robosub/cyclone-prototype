@@ -18,7 +18,7 @@
             <visual name="base_link_visual">
                 <geometry>
                     <mesh>
-                        <uri>model://meshes/rov_model.dae</uri>
+                        <uri>model://rov_model.dae</uri>
                         <scale></scale>
                     </mesh>
                     <!-- <box>

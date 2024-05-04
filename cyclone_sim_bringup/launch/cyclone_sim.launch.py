@@ -30,13 +30,12 @@ def generate_launch_description():
     # Configure ROS nodes for launch
 
     # Setup project paths
-    pkg_cyclone_sim_bringup = get_package_share_directory('ros_gz_example_bringup')
-    # pkg_project_gazebo = get_package_share_directory('ros_gz_example_gazebo')
+    pkg_cyclone_sim_bringup = get_package_share_directory('cyclone_sim_bringup')
     pkg_cyclone_description = get_package_share_directory('cyclone_description')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
     # Load the SDF file from "description" package
-    sdf_file  =  os.path.join(pkg_cyclone_description, 'models', 'cyclone_sim', 'rov_proc.sdf')
+    sdf_file  =  os.path.join(pkg_cyclone_description, 'models', 'rov_proc.sdf')
     with open(sdf_file, 'r') as infp:
         robot_desc = infp.read()
 
