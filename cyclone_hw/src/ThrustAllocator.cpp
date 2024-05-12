@@ -22,7 +22,6 @@ ThrustAllocation ThrustAllocator::allocate_thrust_basic(Wrench &w) {
 
     const double max_val = std::abs(std::max(thrust_1_3, thrust_2_4));
 
-
     // Constrain thrust to our limits
     // This is a very not nice way of doing it
     if(max_val > 1) {
@@ -35,5 +34,7 @@ ThrustAllocation ThrustAllocator::allocate_thrust_basic(Wrench &w) {
 
     t.bfl = thrust_2_4; // Thruster 2
     t.bbr = thrust_2_4; // Thruster 4
+
+    return t;
 }
 
