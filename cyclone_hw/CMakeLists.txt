@@ -11,7 +11,7 @@ find_package(ament_cmake REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-add_executable(cyclone_hw src/cyclone_hw.cpp src/T200.cpp)
+add_executable(cyclone_hw src/cyclone_hw.cpp src/T200.cpp src/ThrustAllocator.cpp)
 target_include_directories(cyclone_hw PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
