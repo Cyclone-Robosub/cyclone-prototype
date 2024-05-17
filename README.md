@@ -1,4 +1,4 @@
-# Cyclone Prototype
+# Cyclone Thruster Firmware Prototype
 
 ## Desc:
 Prototype for thruster control and allocation scheme. No CV yet.
